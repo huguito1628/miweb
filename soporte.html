@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soporte - Ferretería El Señor de Muruhuay</title>
+  <link rel="stylesheet" href="../css/SytleMain.css" />
+  <style>
+    .presentacion-fondo {
+  background-image: url('https://www.comandoconstrucciones.com/wp-content/uploads/2024/01/Ferreteria-1.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 0 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+}
+
+.presentacion-elegante {
+  max-width: 1200px;
+  width: 90%;
+  background: #ffffffcc;
+  backdrop-filter: blur(6px);
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  margin: auto;
+}
+    .presentacion-elegante {
+      max-width: 900px;
+      margin: auto;
+      background: #ffffffcc;
+      backdrop-filter: blur(6px);
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+
+    .presentacion-elegante h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #1e3a8a;
+      text-align: center;
+    }
+
+    .presentacion-elegante p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      text-align: justify;
+    }
+
+    .presentacion-elegante::before {
+      content: "";
+      display: block;
+      height: 6px;
+      width: 80px;
+      margin: 0 auto 20px auto;
+      background: linear-gradient(90deg, #1e3a8a, #2563eb);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <div class="navegacion">
+      <ul>
+        <li>
+          <a href="#">
+            <span class="icon"><ion-icon name="build-outline"></ion-icon></span>
+            <span class="titulo">El Señor de Muruhuay</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html">
+            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+            <span class="titulo">Inicio</span>
+          </a>
+        </li>
+        <li>
+          <a href="productos.html">
+            <span class="icon"><ion-icon name="cube-outline"></ion-icon></span>
+            <span class="titulo">Productos</span>
+          </a>
+        </li>
+        <li>
+          <a href="carrito.html">
+            <span class="icon"><ion-icon name="cart-outline"></ion-icon></span>
+            <span class="titulo">Carrito</span>
+          </a>
+        </li>
+        <li>
+          <a href="perfil.html">
+            <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+            <span class="titulo">Perfil</span>
+          </a>
+        </li>
+        <li>
+          <a href="soporte.html">
+            <span class="icon"><ion-icon name="help-circle-outline"></ion-icon></span>
+            <span class="titulo">Soporte</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+            <span class="titulo">Salir</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="principal">
+      <div class="topbar">
+        <div class="toggle">
+          <ion-icon name="menu-outline"></ion-icon>
+        </div>
+        <div class="buscador">
+          <label>
+            <input type="text" placeholder="Buscar" />
+            <ion-icon name="search-outline"></ion-icon>
+          </label>
+        </div>
+        <div class="usuario">
+          <img src="../img/UserExample.jpg" alt="" />
+        </div>
+      </div>
+
+      <div class="presentacion-fondo">
+        <div class="presentacion-elegante">
+          <h1>Medios para contactarse con nosotros</h1>
+          <p><strong>Teléfono:</strong> +51 987 654 321</p>
+          <p><strong>Correo electrónico:</strong> soporte@senordemuruhuay.com</p>
+          <p><strong>Dirección:</strong> Villa el salvador</p>
+          <p>Nuestro horario de atención es de lunes a viernes, de 8:00 a.m. a 6:00 p.m., y los sábados de 9:00 a.m. a 5:00 p.m. Durante estos días y horas, puedes comunicarte con nosotros para resolver tus dudas o recibir asistencia. Si nos escribes fuera del horario, te responderemos lo antes posible al día siguiente hábil.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==== Ionicons === -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- ====JavaScript=== -->
+  <script src="../js/ScriptMain.js"></script>
+</body>
+</html>
