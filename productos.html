@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Productos - Ferretería El Señor de Muruhuay</title>
+  <link rel="stylesheet" href="../css/SytleMain.css" />
+  <style>
+    .principal {
+  height: 100vh; /* altura completa de la ventana */
+  display: flex;
+  flex-direction: column;
+}
+
+    .grid-productos {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 20px 40px;
+}
+    .card-producto {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  justify-content: flex-start;
+  flex-direction: column;
+ 
+}
+
+.card-producto:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+}
+    
+.oculto {
+  display: none !important;
+}
+
+
+    .card-producto img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin: 0 auto 15px;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+}
+
+   .card-producto h3 {
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card-producto .precio {
+  font-size: 1.15rem;
+  color: #1a8f34;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+    .btn-carrito {
+  padding: 10px 18px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.btn-carrito:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 15px rgba(0, 86, 179, 0.5);
+}
+
+
+    .contenido {
+      padding: 20px;
+    }
+
+    h2 {
+      margin-left: 20px;
+    }
+    /* Estilos del popup */
+#popup-carrito {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; /* oculto por defecto */
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#popup-carrito.mostrar {
+  display: flex;
+}
+
+.popup-contenido {
+  background-color: #fff;
+  padding: 25px 35px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  text-align: center;
+  position: relative;
+  max-width: 320px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#popup-cerrar {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#popup-mensaje {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+#modal-carrito {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+#modal-carrito.mostrar {
+  display: flex;
+}
+
+.modal-contenido {
+  background: white;
+  border-radius: 16px;
+  padding: 30px 35px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  position: relative;
+}
+
+#modal-cerrar {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #444;
+  transition: color 0.3s ease;
+}
+
+#modal-cerrar:hover {
+  color: #007bff;
+}
+
+#modal-cantidad {
+  width: 60px;
+  font-size: 1rem;
+  padding: 6px;
+  margin-top: 8px;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  text-align: center;
+}
+
+.modal-botones {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-confirmar, .btn-cancelar {
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-confirmar {
+  background-color: #007bff;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+}
+
+.btn-confirmar:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 15px rgba(0,86,179,0.5);
+}
+
+.btn-cancelar {
+  background-color: #ccc;
+  color: #333;
+}
+
+.btn-cancelar:hover {
+  background-color: #999;
+  color: white;
+}
+/* Estilo para el toast */
+#toast-mensaje {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff;
+  color: white;
+  padding: 14px 24px;
+  border-radius: 24px;
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.5);
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 11000;
+}
+
+#toast-mensaje.mostrar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <!-- ======== Barra de navegación ======== -->
+    <div class="navegacion">
+      <ul>
+        <li>
+          <a href="#">
+            <span class="icon"><ion-icon name="build-outline"></ion-icon></span>
+            <span class="titulo">El Señor de Muruhuay</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html">
+            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+            <span class="titulo">Inicio</span>
+          </a>
+        </li>
+        <li>
+          <a href="productos.html" class="activo">
+            <span class="icon"><ion-icon name="cube-outline"></ion-icon></span>
+            <span class="titulo">Productos</span>
+          </a>
+        </li>
+        <li>
+          <a href="carrito.html">
+            <span class="icon"><ion-icon name="cart-outline"></ion-icon></span>
+            <span class="titulo">Carrito</span>
+          </a>
+        </li>
+        <li>
+          <a href="perfil.html">
+            <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+            <span class="titulo">Perfil</span>
+          </a>
+        </li>
+        <li>
+          <a href="soporte.html">
+            <span class="icon"><ion-icon name="help-circle-outline"></ion-icon></span>
+            <span class="titulo">Soporte</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+            <span class="titulo">Salir</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ===== Pantalla Principal ===== -->
+    <div class="principal">
+      <div class="topbar">
+        <div class="toggle">
+          <ion-icon name="menu-outline"></ion-icon>
+        </div>
+
+        <div class="buscador">
+          <label>
+            <input type="text" placeholder="Buscar" />
+            <ion-icon name="search-outline"></ion-icon>
+          </label>
+        </div>
+
+        <div class="usuario">
+          <img src="../img/UserExample.jpg" alt="Usuario" />
+        </div>
+      </div>
+
+      <!-- ===== Contenido de Productos ===== -->
+          <div class="grid-productos">
+          <div class="card-producto">
+          <img src="https://alaska.pe/wp-content/uploads/2023/07/Martillo-mango-de-madera-27mm-16oz-51-271-Stanle.jpg" alt="Martillo" />
+          <h3>Martillo</h3>
+          <p class="precio">S/ 25.00</p>
+          <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+
+          <!-- Producto 2 -->
+          <div class="card-producto">
+            <img src="https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaPE/119330200_01/w=1500,h=1500,fit=pad" alt="Destornillador">
+            <h3>Destornillador</h3>
+            <p class="precio">S/ 12.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 3 -->
+          <div class="card-producto">
+            <img src="https://media.falabella.com/sodimacPE/4196007_01/w=800,h=800,fit=pad" alt="Taladro">
+            <h3>Taladro</h3>
+            <p class="precio">S/ 300.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 4 -->
+          <div class="card-producto">
+            <img src="https://media.falabella.com/falabellaPE/116256639_01/w=1500,h=1500,fit=pad" alt="Llave inglesa">
+            <h3>Llave inglesa</h3>
+            <p class="precio">S/ 25.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 5 -->
+          <div class="card-producto">
+            <img src="https://tiendaonline.soltrak.com.pe/media/catalog/product/cache/24de4777e8d76fe4e67813c9010d7898/c/i/cinta_30-615_1.png" alt="Cinta métrica">
+            <h3>Cinta métrica</h3>
+            <p class="precio">S/ 20.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 6 -->
+          <div class="card-producto">
+            <img src="https://promart.vteximg.com.br/arquivos/ids/201720-1000-1000/15143.jpg?v=635927254137100000" alt="Lija">
+            <h3>Lija</h3>
+            <p class="precio">S/ 3.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 7 -->
+          <div class="card-producto">
+            <img src="https://promart.vteximg.com.br/arquivos/ids/725105-1000-1000/133235.jpg?v=637484089782470000" alt="Alicate">
+            <h3>Alicate</h3>
+            <p class="precio">S/ 15.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 8 -->
+          <div class="card-producto">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQClTluN6kR41FsTu5D7Ft1PyeIUa6RfDbuHg&s" alt="Candado">
+            <h3>Candado</h3>
+            <p class="precio">S/ 24.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 9 -->
+          <div class="card-producto">
+            <img src="https://cfrouting.zoeysite.com/cdn-cgi/image/format=auto,fit=scale-down,quality=70/https://s3.amazonaws.com/zcom-media/sites/a0i0h00000QJocmAAD/media/catalog/product/t/u/tubo_pvc_agua_sp_c-10_1_x_5mtr_plastica.jpg" alt="Tubo PVC x 5m">
+            <h3>Tubo PVC x 5m</h3>
+            <p class="precio">S/ 10.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 10 -->
+          <div class="card-producto">
+            <img src="https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/sodimacPE/2918838_01/w=800,h=800,fit=pad" alt="Sierra Electrica">
+            <h3>Sierra Electrica</h3>
+            <p class="precio">S/ 700.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 11 -->
+          <div class="card-producto">
+            <img src="https://insumosfirstpro.com/wp-content/uploads/2022/04/1-LADRILLO-KING-KONG-18-HUECOS-FORTES.png" alt="Ladrillos por millar">
+            <h3>Ladrillos por millar</h3>
+            <p class="precio">S/ 400.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 12 -->
+          <div class="card-producto">
+            <img src="https://tasayco.com.pe/wp-content/uploads/2025/02/arena-fina.jpg" alt="Arena fina x m³">
+            <h3>Arena fina x m³</h3>
+            <p class="precio">S/ 70.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 13 -->
+          <div class="card-producto">
+            <img src="https://insumosfirstpro.com/wp-content/uploads/2022/04/ARENA-GRUESA-POR-MT3.png" alt="Arena gruesa x m³">
+            <h3>Arena gruesa x m³</h3>
+            <p class="precio">S/ 50.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 14 -->
+          <div class="card-producto">
+            <img src="https://promart.vteximg.com.br/arquivos/ids/7133522-1000-1000/22662.jpg?v=638228745030330000" alt="Cemento Sol">
+            <h3>Cemento Sol</h3>
+            <p class="precio">S/ 30.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 15 -->
+          <div class="card-producto">
+            <img src="https://promart.vteximg.com.br/arquivos/ids/8246745-444-444/109015.jpg?v=638648076481000000" alt="Cemento Andino">
+            <h3>Cemento Andino</h3>
+            <p class="precio">S/ 34.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 16 -->
+          <div class="card-producto">
+            <img src="https://www.cpp.com.pe/public/images/productos/pinturas-cpp-latex-satinado-duralatex-pato-1.png" alt="Pintura CPP">
+            <h3>Pintura CPP</h3>
+            <p class="precio">S/ 40.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 17 -->
+          <div class="card-producto">
+            <img src="https://perusupply.com/656-medium_default/brocha-profesional-2-mango-de-plastico-truper.jpg" alt="Brocha para pintar">
+            <h3>Brocha para pintar</h3>
+            <p class="precio">S/ 5.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 18 -->
+          <div class="card-producto">
+            <img src="https://promart.vteximg.com.br/arquivos/ids/440259-1000-1000/13617.jpg?v=637248084411170000" alt="Clavos x 1k">
+            <h3>Clavos x 1k</h3>
+            <p class="precio">S/ 250.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 19 -->
+          <div class="card-producto">
+            <img src="https://promart.vteximg.com.br/arquivos/ids/425255-1000-1000/70499.jpg?v=637231390213570000" alt="Tornillos x 1K">
+            <h3>Tornillos x 1K</h3>
+            <p class="precio">S/ 250.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+          <!-- Producto 20 -->
+          <div class="card-producto">
+            <img src="https://media.falabella.com/sodimacPE/44903_01/w=1500,h=1500,fit=pad" alt="Kit de seguridad">
+            <h3>Kit de seguridad</h3>
+            <p class="precio">S/ 70.00</p>
+            <button class="btn-carrito">Añadir al carrito</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".btn-carrito").forEach(button => {
+      button.addEventListener("click", function () {
+      });
+    });
+  });
+</script>
+<script>
+  function agregarAlCarrito(nombre, precio) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const index = carrito.findIndex(item => item.nombre === nombre);
+    if (index !== -1) {
+      carrito[index].cantidad += 1;
+    } else {
+      carrito.push({ nombre: nombre, precio: precio, cantidad: 1 });
+    }
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    mostrarPopup(`${nombre} añadido al carrito`);  // <-- Cambiado aquí
+  }
+
+  function mostrarPopup(mensaje) {
+    const popup = document.getElementById("popup-carrito");
+    const mensajeElemento = document.getElementById("popup-mensaje");
+    const cerrarBtn = document.getElementById("popup-cerrar");
+
+    mensajeElemento.textContent = mensaje;
+    popup.classList.add("mostrar");
+
+    // Cerrar al hacer clic en la X
+    cerrarBtn.onclick = () => {
+      popup.classList.remove("mostrar");
+    };
+
+    // Cerrar automáticamente después de 2.5 segundos
+    setTimeout(() => {
+      popup.classList.remove("mostrar");
+    }, 2500);
+  }
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("modal-carrito");
+  const modalCerrar = document.getElementById("modal-cerrar");
+  const modalNombre = document.getElementById("modal-producto-nombre");
+  const modalPrecio = document.getElementById("modal-producto-precio");
+  const modalCantidad = document.getElementById("modal-cantidad");
+  const btnConfirmar = document.getElementById("modal-confirmar");
+  const btnCancelar = document.getElementById("modal-cancelar");
+
+  let productoActual = null;
+
+  // Mostrar modal con datos del producto
+  function mostrarModal(nombre, precio) {
+    productoActual = { nombre, precio };
+    modalNombre.textContent = nombre;
+    modalPrecio.textContent = `S/ ${precio.toFixed(2)}`;
+    modalCantidad.value = 1;
+    modal.classList.add("mostrar");
+  }
+
+  // Ocultar modal
+  function ocultarModal() {
+    modal.classList.remove("mostrar");
+    productoActual = null;
+  }
+
+  // Agregar al carrito con cantidad elegida
+  function agregarAlCarrito(nombre, precio, cantidad) {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  const index = carrito.findIndex(item => item.nombre === nombre);
+  if (index !== -1) {
+    carrito[index].cantidad += cantidad;
+  } else {
+    carrito.push({ nombre: nombre, precio: precio, cantidad: cantidad });
+  }
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+  // Mostrar confirmación breve con toast en vez de alert
+function mostrarConfirmacion(mensaje) {
+  const toast = document.getElementById("toast-mensaje");
+  toast.textContent = mensaje;
+  toast.classList.add("mostrar");
+  setTimeout(() => {
+    toast.classList.remove("mostrar");
+  }, 3000);
+}
+  // Evento cierre modal
+  modalCerrar.addEventListener("click", ocultarModal);
+  btnCancelar.addEventListener("click", ocultarModal);
+
+  // Confirmar cantidad y agregar al carrito
+  btnConfirmar.addEventListener("click", () => {
+  const cantidad = parseInt(modalCantidad.value);
+  if (isNaN(cantidad) || cantidad < 1) {
+    alert("Por favor ingresa una cantidad válida (1 o más).");
+    modalCantidad.focus();
+    return;
+  }
+
+  agregarAlCarrito(productoActual.nombre, productoActual.precio, cantidad);
+
+  mostrarConfirmacion("Producto agregado con éxito");
+
+  // Esperar 500 ms antes de ocultar el modal para que el toast se muestre bien
+  setTimeout(() => {
+    ocultarModal();
+  }, 2000);
+});
+  // Asignar evento a todos los botones de añadir
+  document.querySelectorAll(".btn-carrito").forEach(button => {
+    button.addEventListener("click", () => {
+      const card = button.closest(".card-producto");
+      const nombre = card.querySelector("h3").textContent;
+      const precioTexto = card.querySelector(".precio").textContent;
+      const precio = parseFloat(precioTexto.replace("S/", "").trim());
+      mostrarModal(nombre, precio);
+    });
+  });
+});
+
+</script>
+
+  <!-- Script JS principal -->
+  <script src="../js/ScriptMain.js"></script>
+  <!-- Modal popup personalizado -->
+<div id="modal-carrito" class="modal-oculto">
+  <div class="modal-contenido">
+    <span id="modal-cerrar">&times;</span>
+    <h3 id="modal-producto-nombre">Producto</h3>
+    <p>Precio unitario: <span id="modal-producto-precio">S/ 0.00</span></p>
+    <label for="modal-cantidad">Cantidad:</label>
+    <input type="number" id="modal-cantidad" min="1" value="1" />
+    <div class="modal-botones">
+      <button id="modal-confirmar" class="btn-confirmar">Aceptar</button>
+      <button id="modal-cancelar" class="btn-cancelar">Cancelar</button>
+    </div>
+</div>
+<div id="toast-mensaje" class="toast-oculto"></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const inputBuscador = document.querySelector(".buscador input");
+    const productos = document.querySelectorAll(".card-producto");
+
+    inputBuscador.addEventListener("input", () => {
+      const textoBusqueda = inputBuscador.value.toLowerCase().trim();
+
+      productos.forEach(producto => {
+        const nombre = producto.querySelector("h3").textContent.toLowerCase();
+
+        if (nombre.includes(textoBusqueda)) {
+          producto.classList.remove("oculto");
+        } else {
+          producto.classList.add("oculto");
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
