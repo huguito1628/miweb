@@ -1,173 +1,272 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ferretería El Señor de Muruhuay</title>
-<!-- Aquí se incluye el CSS -->
-  <link rel="stylesheet" href="StyleMain.css" />
-</head>
-<body>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
   <style>
-    /* Fondo elegante para la presentación */
-   .presentacion-fondo {
-      background-image: url('https://www.comandoconstrucciones.com/wp-content/uploads/2024/01/Ferreteria-1.jpg');
-      background-size: cover;
-      background-position: center;
-      padding: 0 10px;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      min-height: 100vh;
-    }
-
-.presentacion-elegante {
-  max-width: 1200px;
-  width: 90%;
-  background: #ffffffcc;
-  backdrop-filter: blur(6px);
-  padding: 30px 40px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
-  margin: auto;
-}
-
-    /* Caja elegante con sombra y difuminado */
-    .presentacion-elegante {
-      max-width: 900px;
-      margin: auto;
-      background: #ffffffcc;
-      backdrop-filter: blur(6px);
-      padding: 30px 40px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    body, html {
+      height: 100%;
+      margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://www.comandoconstrucciones.com/wp-content/uploads/2024/01/Ferreteria-1.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: #333;
     }
 
-    .presentacion-elegante h1 {
-      font-size: 2.5em;
-      margin-bottom: 20px;
-      color: #1e3a8a;
+    /* Overlay translúcido con blur */
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255 255 255 / 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 0;
+    }
+
+    /* Barra lateral azul con texto blanco */
+    .sidebar {
+      min-width: 250px;
+      max-width: 250px;
+      height: 100vh;
+      background-color: #D35400; /* naranja mate sólido */
+      color: white;
+      box-shadow: 2px 0 12px rgb(0 0 0 / 0.15);
+      position: fixed;
+      top: 0; left: 0;
+      padding-top: 1.5rem;
+      overflow-y: auto;
+      transition: transform 0.3s ease-in-out;
+      z-index: 1030;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar.hide {
+      transform: translateX(-260px);
+    }
+
+    .sidebar .nav-link {
+      color: white;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar .nav-link:hover, .sidebar .nav-link.active {
+      background: rgba(255 255 255 / 0.15);
+      text-decoration: none;
+    }
+
+    .sidebar .nav-item > .nav-link i {
+      margin-right: 10px;
+      font-size: 1.25rem;
+      vertical-align: middle;
+    }
+
+    .sidebar .brand {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 2rem;
       text-align: center;
+      letter-spacing: 1px;
+      user-select: none;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
     }
 
-    .presentacion-elegante p {
-      font-size: 1.2em;
-      line-height: 1.6;
-      margin-bottom: 16px;
-      text-align: justify;
+    .content-wrapper {
+      margin-left: 250px;
+      transition: margin-left 0.3s ease-in-out;
+      padding: 2rem 3rem;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
     }
 
-    .presentacion-elegante::before {
+    .content-wrapper.full-width {
+      margin-left: 0;
+      padding: 1rem 1.5rem;
+    }
+
+    /* Botón menú hamburguesa */
+    #menu-toggle {
+      font-size: 1.8rem;
+      color: #1e3a8a;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Presentación elegante con tonos azulados */
+    .presentation-box {
+      background: rgba(255 255 255 / 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(30, 58, 138, 0.4);
+      padding: 3rem 3.5rem;
+      max-width: 900px;
+      margin: 3rem auto;
+      color: #1e3a8a;
+    }
+
+    .presentation-box h1 {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      font-weight: 900;
+      text-shadow: 1px 1px 3px rgba(37, 99, 235, 0.8);
+      position: relative;
+    }
+
+    .presentation-box h1::before {
       content: "";
       display: block;
       height: 6px;
-      width: 80px;
-      margin: 0 auto 20px auto;
+      width: 100px;
       background: linear-gradient(90deg, #1e3a8a, #2563eb);
-      border-radius: 3px;
+      border-radius: 4px;
+      margin: 0 auto 1.8rem auto;
+      box-shadow: 0 0 8px #2563ebaa;
+    }
+
+    .presentation-box p {
+      font-size: 1.2rem;
+      line-height: 1.7;
+      text-align: justify;
+      color: #1a2c6c;
+      margin-bottom: 1.3rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        height: 100vh;
+        z-index: 1040;
+      }
+      .content-wrapper {
+        margin-left: 0;
+        padding: 1.5rem 1.2rem;
+      }
+    }
+
+    /* Usuario imagen circular */
+    .user-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #2563eb;
+      box-shadow: 0 0 8px rgba(37, 99, 235, 0.7);
     }
   </style>
 </head>
 <body>
-  <!--  ========Barra de navegación==== -->
-  <div class="contenedor">
-    <div class="navegacion">
-      <ul>
-        <li>
-          <a href="#">
-            <span class="icon"><ion-icon name="build-outline"></ion-icon></span>
-            <span class="titulo">El Señor de Muruhuay</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-            <span class="titulo">Inicio</span>
-          </a>
-        </li>
-        <li>
-          <a href="productos.html">
-            <span class="icon"><ion-icon name="cube-outline"></ion-icon></span>
-            <span class="titulo">Productos</span>
-          </a>
-        </li>
-        <li>
-          <a href="carrito.html">
-            <span class="icon"><ion-icon name="cart-outline"></ion-icon></span>
-            <span class="titulo">Carrito</span>
-          </a>
-        </li>
-        <li>
-          <a href="perfil.html">
-            <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
-            <span class="titulo">Perfil</span>
-          </a>
-        </li>
-        <li>
-          <a href="soporte.html">
-            <span class="icon"><ion-icon name="help-circle-outline"></ion-icon></span>
-            <span class="titulo">Soporte</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
-            <span class="titulo">Salir</span>
-          </a>
-        </li>
-      </ul>
+
+  <div class="overlay"></div>
+
+  <!-- Sidebar -->
+  <nav id="sidebar" class="sidebar">
+    <div class="brand text-white">
+      <i class="bi bi-tools"></i> El Señor de Muruhuay
     </div>
+    <ul class="nav flex-column px-2">
+      <li class="nav-item">
+        <a class="nav-link active" href="#"><i class="bi bi-house-door-fill"></i> Inicio</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="productos.html"><i class="bi bi-cube"></i> Productos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="carrito.html"><i class="bi bi-cart-fill"></i> Carrito</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="perfil.html"><i class="bi bi-person-circle"></i> Perfil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="soporte.html"><i class="bi bi-question-circle"></i> Soporte</a>
+      </li>
+      <li class="nav-item mt-auto mb-4">
+        <a class="nav-link text-danger" href="#"><i class="bi bi-box-arrow-right"></i> Salir</a>
+      </li>
+    </ul>
+  </nav>
 
-    <!-- ====Pantalla Principal=== -->
-    <div class="principal">
-      <div class="topbar">
-        <div class="toggle">
-          <ion-icon name="menu-outline"></ion-icon>
-        </div>
+  <!-- Contenido principal -->
+  <div id="main-content" class="content-wrapper">
 
-        <div class="buscador">
-          <label>
-            <input type="text" placeholder="Buscar" />
-            <ion-icon name="search-outline"></ion-icon>
-          </label>
-        </div>
-
-        <div class="usuario">
-          <img src="../img/UserExample.jpg" alt="" />
-        </div>
+    <!-- Topbar -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div id="menu-toggle" class="d-md-none" title="Mostrar/Ocultar menú">
+        <i class="bi bi-list"></i>
       </div>
 
-      <!-- ======= Presentación Elegante con Fondo ======= -->
-      <div class="presentacion-fondo">
-        <div class="presentacion-elegante">
-          <h1>Ferretería El Señor de Muruhuay</h1>
-          <p>
-            En Ferretería El Señor de Muruhuay, nos enorgullece ser el aliado confiable de cada proyecto, ya sea en el hogar, la construcción o el mantenimiento industrial. 
-            Nos distinguimos por brindar atención personalizada, productos de alta calidad y soluciones prácticas para nuestros clientes.
-          </p>
-          <p>
-            Con una sólida trayectoria y compromiso con nuestra comunidad, trabajamos cada día para ofrecer asesoramiento experto, precios justos y un servicio excepcional. 
-            Tu satisfacción es nuestro mayor objetivo.
-          </p>
-          <p>
-            Gracias por elegirnos. ¡Construyamos juntos el futuro!
-          </p>
-        </div>
+      <form class="d-flex flex-grow-1 mx-3" role="search" onsubmit="return false;">
+        <input class="form-control rounded-pill me-2 border-primary" type="search" placeholder="Buscar" aria-label="Buscar" />
+        <button class="btn btn-primary rounded-circle px-3" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+
+      <div>
+        <img src="../img/UserExample.jpg" alt="Usuario" class="user-img" />
       </div>
     </div>
+
+    <!-- Presentación -->
+    <section class="presentation-box shadow-lg">
+      <h1>Ferretería El Señor de Muruhuay</h1>
+      <p>
+        En Ferretería El Señor de Muruhuay, nos enorgullece ser el aliado confiable de cada proyecto, ya sea en el hogar, la construcción o el mantenimiento industrial.
+        Nos distinguimos por brindar atención personalizada, productos de alta calidad y soluciones prácticas para nuestros clientes.
+      </p>
+      <p>
+        Con una sólida trayectoria y compromiso con nuestra comunidad, trabajamos cada día para ofrecer asesoramiento experto, precios justos y un servicio excepcional.
+        Tu satisfacción es nuestro mayor objetivo.
+      </p>
+      <p>
+        Gracias por elegirnos. ¡Construyamos juntos el futuro!
+      </p>
+    </section>
+
   </div>
 
-  <!-- ==== Ionicons === -->
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- ====JavaScript=== -->
-  <script src="ScriptMain.js"></script>
+  <script>
+    // Toggle sidebar on small screens
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const contentWrapper = document.querySelector('.content-wrapper');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('hide');
+      contentWrapper.classList.toggle('full-width');
+    });
+
+    // Inicialmente ocultar sidebar en móvil
+    if(window.innerWidth < 768) {
+      sidebar.classList.add('hide');
+      contentWrapper.classList.add('full-width');
+    }
+
+    window.addEventListener('resize', () => {
+      if(window.innerWidth >= 768){
+        sidebar.classList.remove('hide');
+        contentWrapper.classList.remove('full-width');
+      } else {
+        sidebar.classList.add('hide');
+        contentWrapper.classList.add('full-width');
+      }
+    });
+  </script>
+
 </body>
 </html>
+
