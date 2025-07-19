@@ -576,10 +576,10 @@ function mostrarConfirmacion(mensaje) {
 
   mostrarConfirmacion("Producto agregado con éxito");
 
-  // Esperar 500 ms antes de ocultar el modal para que el toast se muestre bien
+  // Esperar  un breve momento antes de ocultar el modal para que el toast se muestre bien
   setTimeout(() => {
     ocultarModal();
-  }, 2000);
+  }, 1000);
 });
   // Asignar evento a todos los botones de añadir
   document.querySelectorAll(".btn-carrito").forEach(button => {
