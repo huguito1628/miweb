@@ -6,15 +6,8 @@
   <title>Ferretería El Señor de Muruhuay</title>
   <!-- Aquí se incluye el CSS -->
   <link rel="stylesheet" href="StyleMain.css" />
-
-  <!-- EmailJS SDK -->
-  <script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
-  <script>
-    (function(){
-      emailjs.init("chmtvfZ0tbjjUHv2-"); // Tu API key
-    })();
-  </script>
-
+</head>
+<body>
   <style>
     /* Fondo elegante para la presentación */
    .presentacion-fondo {
@@ -307,20 +300,6 @@
         // Guardar usuario en localStorage (simulado)
         const userData = { nombre, numero, direccion, correo, password };
         localStorage.setItem(correo, JSON.stringify(userData));
-        
-        // Enviar correo de bienvenida usando EmailJS
-        const templateParams = {
-          user_email: correo,
-          user_name: nombre,
-          message: "Gracias por registrarte en Ferretería El Señor de Muruhuay. ¡Te damos la bienvenida!"
-        };
-
-        emailjs.send('service_l4mh9qh', 'template_dcophn8', templateParams)
-          .then(function(response) {
-            console.log('Correo enviado!', response.status, response.text);
-          }, function(error) {
-            console.error('Error al enviar correo:', error);
-          });
         
         // Mostrar popup registro exitoso
         welcomeText.textContent = 'Usuario registrado exitosamente.';
