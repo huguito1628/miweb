@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Prueba envío EmailJS con formulario</title>
+  <meta charset="UTF-8">
+  <title>Envío de correo con EmailJS</title>
   <script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
   <script>
-    (function(){
-      emailjs.init("chmtvfZ0tbjjUHv2-");
+    // Inicializa EmailJS con tu public key
+    (function() {
+      emailjs.init("Dx4yx3_DBrlIVDhel");
     })();
 
     function enviarCorreo(e) {
       e.preventDefault();
 
-      const correo = document.getElementById('correo').value.trim();
-      const nombre = document.getElementById('nombre').value.trim();
+      const nombre = document.getElementById("nombre").value.trim();
+      const correo = document.getElementById("correo").value.trim();
 
-      if(!correo || !nombre) {
-        alert('Por favor completa correo y nombre');
+      if (!nombre || !correo) {
+        alert("Por favor completa ambos campos.");
         return;
       }
 
       const templateParams = {
-        user_email: correo,
-        user_name: nombre,
-        message: "Gracias por registrarte en Ferretería El Señor de Muruhuay. ¡Te damos la bienvenida!"
+        name: nombre,
+        email: correo
       };
 
-      emailjs.send('service_l4mh9qh', 'template_dcophn8', templateParams)
-      .then(function(response) {
-        alert('Correo enviado correctamente');
-        console.log('Éxito:', response.status, response.text);
-      }, function(error) {
-        alert('Error al enviar correo');
-        console.error('Error:', error);
-      });
+      emailjs.send("service_l4mh9qh", "template_dcophn8", templateParams)
+        .then(function(response) {
+          console.log("SUCCESS!", response.status, response.text);
+          alert("¡Correo enviado correctamente!");
+        }, function(error) {
+          console.error("FAILED...", error);
+          alert("Error al enviar el correo.");
+        });
     }
   </script>
 </head>
 <body>
-  <h2>Formulario de prueba EmailJS</h2>
-  <form id="testForm" onsubmit="enviarCorreo(event)">
-    <label for="correo">Correo:</label><br />
-    <input type="email" id="correo" required /><br /><br />
+  <h2>Formulario de Registro</h2>
+  <form onsubmit="enviarCorreo(event)">
+    <label for="nombre">Nombre:</label><br>
+    <input type="text" id="nombre" required><br><br>
 
-    <label for="nombre">Nombre:</label><br />
-    <input type="text" id="nombre" required /><br /><br />
+    <label for="correo">Correo electrónico:</label><br>
+    <input type="email" id="correo" required><br><br>
 
     <button type="submit">Enviar correo</button>
   </form>
