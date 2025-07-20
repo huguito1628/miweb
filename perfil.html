@@ -6,8 +6,15 @@
   <title>Ferretería El Señor de Muruhuay</title>
   <!-- Aquí se incluye el CSS -->
   <link rel="stylesheet" href="StyleMain.css" />
-</head>
-<body>
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("chmtvfZ0tbjjUHv2-"); // Tu API key
+    })();
+  </script>
+
   <style>
     /* Fondo elegante para la presentación */
    .presentacion-fondo {
@@ -194,7 +201,7 @@
             <input type="email" id="correo" name="correo" required placeholder="ejemplo@correo.com" style="width: 100%; padding: 8px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #ccc;" /><br />
 
             <label for="password">Contraseña:</label><br />
-            <input type="password" id="password" name="password" required placeholder="****" style="width: 100%; padding: 8px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ccc;" /><br />
+            <input type="password" id="password" name="password" required placeholder="********" style="width: 100%; padding: 8px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ccc;" /><br />
 
             <!-- Campos exclusivos de registro, inicialmente ocultos -->
             <div id="registerFields" style="display:none;">
@@ -301,6 +308,20 @@
         const userData = { nombre, numero, direccion, correo, password };
         localStorage.setItem(correo, JSON.stringify(userData));
         
+        // Enviar correo de bienvenida usando EmailJS
+        const templateParams = {
+          user_email: correo,
+          user_name: nombre,
+          message: "Gracias por registrarte en Ferretería El Señor de Muruhuay. ¡Te damos la bienvenida!"
+        };
+
+        emailjs.send('service_l4mh9qh', 'template_dcophn8', templateParams)
+          .then(function(response) {
+            console.log('Correo enviado!', response.status, response.text);
+          }, function(error) {
+            console.error('Error al enviar correo:', error);
+          });
+        
         // Mostrar popup registro exitoso
         welcomeText.textContent = 'Usuario registrado exitosamente.';
         welcomeModal.style.display = 'flex';
@@ -328,7 +349,7 @@
         }
 
         // Login exitoso: mostrar popup modal con bienvenida
-        welcomeText.textContent = ¡Bienvenido, ${userObj.nombre || 'usuario'}!;
+        welcomeText.textContent = `¡Bienvenido, ${userObj.nombre || 'usuario'}!`;
         welcomeModal.style.display = 'flex';
 
         userForm.reset();
