@@ -6,10 +6,8 @@
   <title>Ferretería El Señor de Muruhuay</title>
   <!-- Aquí se incluye el CSS -->
   <link rel="stylesheet" href="StyleMain.css" />
-
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-
+</head>
+<body>
   <style>
     /* Fondo elegante para la presentación */
    .presentacion-fondo {
@@ -232,8 +230,6 @@
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
   <script>
-    emailjs.init("chmtvfZ0tbjjUHv2-"); // Inicializa EmailJS con tu public key
-
     const loginBtn = document.getElementById('loginBtn');
     const registerBtn = document.getElementById('registerBtn');
     const registerFields = document.getElementById('registerFields');
@@ -304,23 +300,10 @@
         // Guardar usuario en localStorage (simulado)
         const userData = { nombre, numero, direccion, correo, password };
         localStorage.setItem(correo, JSON.stringify(userData));
-
-        // Enviar correo de bienvenida usando EmailJS
-        emailjs.send("service_l4mh9qh", "template_dcophn8", {
-          to_email: correo,
-          to_name: nombre,
-          message: "Gracias por registrarte en la ferretería El Señor de Muruhuay, " + nombre + ". ¡Bienvenido!",
-        })
-        .then(() => {
-          // Mostrar popup registro exitoso
-          welcomeText.textContent = 'Usuario registrado exitosamente. Se envió un correo de bienvenida.';
-          welcomeModal.style.display = 'flex';
-        })
-        .catch((error) => {
-          console.error("Error enviando correo:", error);
-          welcomeText.textContent = 'Usuario registrado, pero hubo un problema enviando el correo.';
-          welcomeModal.style.display = 'flex';
-        });
+        
+        // Mostrar popup registro exitoso
+        welcomeText.textContent = 'Usuario registrado exitosamente.';
+        welcomeModal.style.display = 'flex';
 
         message.textContent = '';
         userForm.reset();
